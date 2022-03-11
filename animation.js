@@ -3,7 +3,7 @@ function animateHero(){
     let arrows = document.querySelectorAll("[data-arrow='uparrow']");
     let horizLineLeft = document.querySelectorAll("[data-line='horizontal-left']");
     let horizLineRight = document.querySelectorAll("[data-line='horizontal-right']");
-    let smallCircle = document.querySelector("[data-glow='circle']")
+    let smallCircle = document.querySelector("[data-glow='circle']");
     let expandArrow = document.querySelectorAll("[data-expand]");
     let heroTimeline = gsap.timeline({duration:1, ease:"linear",});
     let lineTimeline = gsap.timeline({duration:1, ease:"linear",});
@@ -12,6 +12,7 @@ function animateHero(){
     heroTimeline.from(arrows, {y:"-2px", transformOrigin:"bottom", repeat:-1, yoyo:true});
     lineTimeline.from(horizLineRight, {scale:.1, transformOrigin:"left",  repeat:-1, yoyo:true, stagger:0.5});
     lineTimeline.from(horizLineLeft, {scale:.1, transformOrigin:"right",  repeat:-1, yoyo:true, stagger:0.5});
+    heroTimeline.from(smallCircle, {scale:.5, transformOrigin:"center",  repeat:-1, yoyo:true,})
     expandArrow.forEach((arr) => {
         let elmAttr = arr.getAttribute("data-expand");
         if(elmAttr == "expand-tl"){
