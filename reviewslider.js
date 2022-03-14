@@ -59,10 +59,6 @@ class REVIEWSLIDER {
             cssEase: "linear",
             appendDots: $paginationBox,
         });
-        //get the length of the slider dots.
-        // const sliderLength = this.sliderOne.find(".slick-slide").length;
-        // $paginationBox.innerHTML = "";
-        //add dots based on the number of slides.
         $patinationItem.forEach((item, index) => {
             item.setAttribute("item-ixd", index)
         })
@@ -73,9 +69,6 @@ class REVIEWSLIDER {
         // adding event listener into the dots, reviews.
         this.$newPaginationItems.forEach((item) => {
             item.addEventListener("click", (e) => {
-                // const currIdx = [...e.currentTarget.parentElement.children].indexOf(
-                //     e.currentTarget
-                // );
                 const currIdx = e.currentTarget.getAttribute("item-ixd")
                 this.sliderOne.slick("slickGoTo", currIdx);
                 this.addRemoveActive(currIdx);
@@ -128,6 +121,7 @@ class REVIEWSLIDER {
             variableWidth: false,
             arrows: false,
             centerMode: true,
+            focusOnSelect:true,
           });
     }
 }
