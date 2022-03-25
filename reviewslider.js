@@ -112,6 +112,7 @@ class REVIEWSLIDER {
     }
 
     activateCarousel(){
+        let [prev, next] = document.querySelectorAll("[data-navi]");
         this.sliderTwo = $("[carousel='list']").slick({
             dots: false,
             slidesToScroll: 1,
@@ -122,6 +123,9 @@ class REVIEWSLIDER {
             arrows: false,
             centerMode: true,
             focusOnSelect:true,
+            arrows: true,
+            prevArrow: prev,
+            nextArrow: next,
           });
     }
 }
