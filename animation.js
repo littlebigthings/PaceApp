@@ -7,14 +7,16 @@ function animateHero() {
     let glowLine = document.querySelectorAll("[data-line='glow']");
     let smallCircle = document.querySelector("[data-glow='circle']");
     let drawPath=document.querySelector("[data-path='btm-top']");
+    let dotToShowHide = document.querySelectorAll("[data-dot='opacity']");
     let animTimeline = gsap.timeline({ duration: 1, ease: "linear", });
     if (mainImage == null || mainImage == undefined) return;
-    animTimeline.from(drawPath, { drawSVG: "100% 100%",stagger: 0.5 });
+    animTimeline.from(drawPath, { drawSVG: "100% 100%",stagger: 0.5, duration:2, });
+    animTimeline.from(dotToShowHide,{opacity:0, stagger:0.1});
     animTimeline.from(arrows, { y: "-2px", transformOrigin: "bottom", repeat: -1, yoyo: true },);
-    animTimeline.from(smallCircle, { scale: .5, transformOrigin: "center", repeat: -1, yoyo: true, },);
-    animTimeline.from(glowLine, { opacity: 0.5, repeat: -1, yoyo: true, },);
     animTimeline.from(horizLineRight, { drawSVG: "0% 0%" ,repeat: -1, yoyo: true, stagger: 0.5 });
     animTimeline.from(horizLineLeft, { drawSVG: "0% 0%" ,repeat: -1, yoyo: true, stagger: 0.5 });
+    animTimeline.from(smallCircle, { scale: 0, transformOrigin: "center", repeat: -1, yoyo: true, duration:2},);
+    animTimeline.from(glowLine, { opacity: 0.5, repeat: -1, yoyo: true, duration:2},);
 }
 function organicSecAnimation() {
     let triggerAnimElem = document.querySelector("[data-trigger='scroll']");
@@ -22,7 +24,7 @@ function organicSecAnimation() {
     let greenLines = document.querySelectorAll("[data-line='vertical-green']")
     let circle = document.querySelectorAll("[data-circle='scale']");
     let expArrow = document.querySelectorAll("[data-arr='exp']");
-    let animTimeline = gsap.timeline({ duration: 1.5, stagger: 0.5, });
+    let animTimeline = gsap.timeline({ duration: 3, stagger: 0.1, });
     gsap.set(triggerAnimElem, {autoAlpha: 0});
     ScrollTrigger.create({
         trigger: triggerAnimElem,
