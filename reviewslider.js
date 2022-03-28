@@ -119,7 +119,7 @@ class REVIEWSLIDER {
             infinite: true,
             autoplay: true,
             autoplaySpeed: 4000,
-            variableWidth: false,
+            variableWidth: true,
             arrows: false,
             centerMode: false,
             focusOnSelect:true,
