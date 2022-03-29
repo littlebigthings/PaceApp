@@ -42,11 +42,11 @@ class UPDATECONENT {
     activeDefault(){
         let parentEle = this.updateHeadData[0].parentElement;
         let headData = parentEle.querySelector("[data-update-from='head']").innerHTML;
-        let contentData = querySelector("[data-update-from='content']").innerHTML;
+        let contentData = parentEle.querySelector("[data-update-from='content']").innerHTML;
         parentEle.classList.add("active-tab");
         if(headData.length>0 && contentData.length > 0){
-            this.updateHeadTo.innerHTML = updateHeadData;
-            this.updateContentTo.innerHTML = updateContentData;
+            this.updateHeadTo.innerHTML = headData;
+            this.updateContentTo.innerHTML = contentData;
         }
     }
 
