@@ -24,7 +24,7 @@ function organicSecAnimation() {
     let greenLines = document.querySelectorAll("[data-line='vertical-green']")
     let circle = document.querySelectorAll("[data-circle='scale']");
     let expArrow = document.querySelectorAll("[data-arr='exp']");
-    let animTimeline = gsap.timeline({ duration: 3, stagger: 0.1, });
+    let animTimeline = gsap.timeline({ duration: 3, stagger: 0.1, ease:"linear",});
     gsap.set(triggerAnimElem, {autoAlpha: 0});
     ScrollTrigger.create({
         trigger: triggerAnimElem,
@@ -40,5 +40,27 @@ function organicSecAnimation() {
       })
 }
 
+function Animatecrm(){
+    let iconBlocks = document.querySelectorAll("[data-draw-shape]");
+    let triggerAnimElem = document.querySelector("[data-target='trigger']");
+    let logos = document.querySelectorAll("[data-logo]");
+    let drawLines = document.querySelectorAll("[data-draw]");
+    let crmBlocks = document.querySelectorAll(".crm-div");
+    let animTimeline = gsap.timeline({ease:"linear"});
+    gsap.set(triggerAnimElem, {autoAlpha: 0});
+    ScrollTrigger.create({
+        trigger: triggerAnimElem,
+        start: "top 20%",
+        onEnter: self =>{ 
+                animTimeline.to(triggerAnimElem, {autoAlpha: 1, duration:1})
+                animTimeline.from(iconBlocks, { drawSVG: "100% 100%", duration:2});
+                animTimeline.from(logos, {opacity: 0, duration:1,})
+                animTimeline.from(drawLines, { drawSVG: "0% 0%", duration:2,});
+                animTimeline.from(crmBlocks, { opacity: 0,})
+                self.disable();
+         }
+      })
+}
 animateHero();
 organicSecAnimation();
+Animatecrm();
