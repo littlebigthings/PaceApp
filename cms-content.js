@@ -5,7 +5,7 @@ class UPDATECONENT {
         this.updateHeadTo = document.querySelector("[data-update-to='head']");
         this.updateContentTo = document.querySelector("[data-update-to='content']");
         this.btnArr = document.querySelectorAll("[data-listen='click']");
-        this.timeline = gsap.timeline({opacity:1, duration:0.1, ease:"linear"})
+        this.timeline = gsap.timeline({duration:0.1, ease:"linear",})
         this.init();
     }
 
@@ -26,7 +26,7 @@ class UPDATECONENT {
                         if(updateHeadData.length>0 && updateContentData.length > 0){
                             this.updateHeadTo.innerHTML = updateHeadData;
                             this.updateContentTo.innerHTML = updateContentData;
-                            this.animateContent(this.updateHeadTo, this.updateContentTo)
+                            this.animateContent()
                         }
                     }
                     if(window.screen.width<786)this.toShowIntoScreen.scrollIntoView({behavior:"smooth"});
@@ -59,9 +59,9 @@ class UPDATECONENT {
             }
         })
     }
-    animateContent(head, content){
-        this.timeline.from(head, {opacity:0, y:"-6px",});
-        this.timeline.from(content, {opacity:0, y:"-4px",},"-=0.5");
+    animateContent(){
+        this.timeline.fromTo(this.updateHeadTo, {opacity:0, y:"-6px",},{ opacity:1, y:0});
+        this.timeline.fromTo(this.updateContentTo, {opacity:0, y:"-4px",},{ opacity:1, y:0}, "-=0.5");
     }
 }
 
