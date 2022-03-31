@@ -89,7 +89,47 @@ function cmsLineDraw(){
         })
     }
 }
+
+function animateBlock(){
+    let trigger = document.querySelector("[data-trigger='section-three']");
+    let hideShow = document.querySelector("[data-anim='hide-show']");
+    let showBlueBlock = [...document.querySelectorAll("[data-draw='blue']")].reverse();
+    let showRedBlock = [...document.querySelectorAll("[data-draw='red']")].reverse();
+    let showGreenBlock = document.querySelectorAll("[data-draw='green']");
+    let animateLine = document.querySelectorAll("[data-draw='vertical']")
+    let animTimeline = gsap.timeline({ease:"linear"});
+    let allBallWrap = document.querySelectorAll(".ball-wrap");
+    let allCircle = document.querySelectorAll(".ball-coloeful");
+    if(trigger != undefined && hideShow != undefined && showRedBlock.length > 0 && showBlueBlock.length > 0 && showGreenBlock.length > 0){
+        animTimeline.set(hideShow, {opacity: 0});
+        // gsap.set(drawBorder, {opacity: 0});
+        ScrollTrigger.create({
+            trigger: trigger,
+            start: "top 20%",
+            onEnter: self =>{ 
+                animTimeline.to(hideShow, {autoAlpha: 1, duration:1});
+                animTimeline.fromTo(showRedBlock,{opacity:0},{opacity:1, duration:1, stagger:0.5})
+                animTimeline.fromTo(showBlueBlock,{opacity:0},{opacity:1, duration:1, stagger:0.5})
+                animTimeline.fromTo(showGreenBlock,{opacity:0},{opacity:1, duration:1, stagger:0.5})
+                animTimeline.fromTo(animateLine, {height: 0,},{height:"auto", duration:1, stagger:0.5, yoyo:true, repeat:-1,})
+                animTimeline.fromTo(allCircle, {
+                    borderRadius:"100%",
+                    rotation:0,
+                }, {
+                    borderRadius:"0%",
+                    rotation:90,
+                    duration:1,
+                    stagger:0.5,
+                    yoyo:true,
+                    repeat:-1,
+                },"-=2");
+                self.disable();
+            }
+        })
+    }
+}
 animateHero();
 organicSecAnimation();
 Animatecrm();
 cmsLineDraw();
+animateBlock()
