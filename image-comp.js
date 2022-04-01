@@ -3,8 +3,8 @@ function imageCompare() {
   $("[wrapper='compare']").twentytwenty({
     default_offset_pct: 0.5, // How much of the before image is visible when the page loads
     orientation: 'horizontal', // Orientation of the before and after images ('horizontal' or 'vertical')
-    before_label: 'Before PaceApp', // Set a custom before label
-    after_label: 'After PaceApp', // Set a custom after label
+    before_label: 'Without Pace', // Set a custom before label
+    after_label: 'With Pace', // Set a custom after label
     no_overlay: false, //Do not show the overlay with before and after
     move_slider_on_hover: false, // Move slider on mouse hover?
     move_with_handle_only: true, // Allow a user to swipe anywhere on the image to control slider movement. 
