@@ -112,21 +112,24 @@ function animateBlock(){
                 animTimeline.to(hideShow, {autoAlpha: 1});
                 animTimeline.fromTo(allCircle, {opacity:0}, {opacity:1, duration:duration, stagger: stagger})
                 animTimeline.from(dotWrapper, {borderColor:"transparent", duration:duration, stagger: stagger})
-                animTimeline.fromTo(showGreenBlock,{opacity:0},{opacity:1, duration:duration, })
-                animTimeline.fromTo(showBlueBlock,{opacity:0},{opacity:1, duration:duration, })
-                animTimeline.fromTo(showRedBlock,{opacity:0},{opacity:1, duration:duration, })
-                animTimeline.fromTo(animateLine, {height: 0,},{height:"auto", duration:1, stagger:0.5, yoyo:true, repeat:-1,})
-                animTimeline.fromTo(allCircle, {
-                    borderRadius:"100%",
-                    rotation:0,
-                }, {
-                    borderRadius:"0%",
-                    rotation:90,
-                    duration:1,
-                    stagger:0.5,
-                    yoyo:true,
-                    repeat:-1,
-                },"-=2");
+                // animTimeline.fromTo(showGreenBlock,{opacity:0},{opacity:1, duration:duration, })
+                // animTimeline.fromTo(showRedBlock,{opacity:0},{opacity:1, duration:duration, })
+                // animTimeline.fromTo(showBlueBlock,{opacity:0},{opacity:1, duration:duration, })
+                animTimeline.fromTo(showGreenBlock,{opacity:0,width:0},{opacity:1, width:"100%", duration:duration, })
+                animTimeline.fromTo(showBlueBlock,{opacity:0,width:0},{opacity:1, width:"100%", duration:duration, })
+                animTimeline.fromTo(showRedBlock,{opacity:0,width:0},{opacity:1, width:"100%", duration:duration, })
+                // animTimeline.fromTo(animateLine, {height: 0,},{height:"auto", duration:1, stagger:0.5, yoyo:true, repeat:-1,})
+                // animTimeline.fromTo(allCircle, {
+                //     borderRadius:"100%",
+                //     rotation:0,
+                // }, {
+                //     borderRadius:"0%",
+                //     rotation:90,
+                //     duration:1,
+                //     stagger:0.5,
+                //     yoyo:true,
+                //     repeat:-1,
+                // },"-=2");
                 self.disable();
             }
         })
