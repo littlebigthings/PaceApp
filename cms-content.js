@@ -19,7 +19,7 @@ class UPDATECONENT {
             this.btnArr.forEach((btn, index) => {
                 btn.addEventListener("click", (e) => {
                     let clickedOn = e.currentTarget;
-                    if(!clickedOn.classList.contains("active-red"))clickedOn.classList.add("active-tab");
+                    if(!clickedOn.classList.contains("active-red") && !clickedOn.classList.contains("full-radius"))clickedOn.classList.add("active-tab");
                     if(clickedOn != null || clickedOn != undefined){
                         let updateHeadData = clickedOn.querySelector("[data-update-from='head']").innerHTML;
                         let updateContentData = clickedOn.querySelector("[data-update-from='content']").innerHTML;
