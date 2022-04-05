@@ -115,9 +115,9 @@ function animateBlock(){
                 // animTimeline.fromTo(showGreenBlock,{opacity:0},{opacity:1, duration:duration, })
                 // animTimeline.fromTo(showRedBlock,{opacity:0},{opacity:1, duration:duration, })
                 // animTimeline.fromTo(showBlueBlock,{opacity:0},{opacity:1, duration:duration, })
-                animTimeline.fromTo(showGreenBlock,{opacity:0,width:0},{opacity:1, width:"100%", duration:duration, })
-                animTimeline.fromTo(showBlueBlock,{opacity:0,width:0},{opacity:1, width:"100%", duration:duration, })
-                animTimeline.fromTo(showRedBlock,{opacity:0,width:0},{opacity:1, width:"100%", duration:duration, })
+                animTimeline.fromTo(showGreenBlock,{opacity:0,width:0},{opacity:1, width:"100%", duration:duration, stagger:0.5})
+                animTimeline.fromTo(showBlueBlock,{opacity:0,width:0},{opacity:1, width:"100%", duration:duration, stagger:0.5})
+                animTimeline.fromTo(showRedBlock,{opacity:0,width:0},{opacity:1, width:"100%", duration:duration, stagger:0.5})
                 // animTimeline.fromTo(animateLine, {height: 0,},{height:"auto", duration:1, stagger:0.5, yoyo:true, repeat:-1,})
                 // animTimeline.fromTo(allCircle, {
                 //     borderRadius:"100%",
