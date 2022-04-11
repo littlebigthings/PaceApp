@@ -52,7 +52,7 @@ class REVIEWSLIDER {
             slidesToShow: 1,
             infinite: true,
             autoplay: false,
-            autoplaySpeed: 2000,
+            autoplaySpeed: 5000,
             arrows: false,
             speed: 200,
             fade: true,
