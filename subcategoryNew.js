@@ -151,18 +151,18 @@ function addScrollListener() {
         if (allHeadsCategory.length > 0) {
             allHeadsCategory.forEach(head => {
                 head.addEventListener("click", (e) => {
-                    // console.log(e.currentTarget)
-                    openCloseDropdown(e.currentTarget)
-                    // rotateIcon(e.currentTarget.querySelector('.dd-icon'), e.currentTarget)
 
+                    openCloseDropdown(e.currentTarget)
+                    
                     let headSlug = e.currentTarget.getAttribute("data-category-title");
                     if (headSlug.length > 0) {
                         let elmTillScroll = richText.querySelector(`[data-title='${headSlug}']`);
-                        elmTillScroll.scrollIntoView({
+                        let elDistanceToTop = window.pageYOffset + elmTillScroll.getBoundingClientRect().top;
+                        let navHeight = document.querySelector(".navigation").clientHeight;
+                        window.scrollTo({
+                            top: elDistanceToTop - navHeight - 20,
                             behavior: "smooth",
-                            block: "center",
-
-                        })
+                        });
                     }
                 })
             })
@@ -177,8 +177,7 @@ function convertToSlug(Text) {
         .replace(/ +/g, "-");
 }
 
-function openCloseDropdown(currentClick, target) {
-    // if(target && target.getAttribute("data-head") == "heading") return;
+function openCloseDropdown(currentClick) {
 
     let allDropdowns = document.querySelectorAll("[data-list='dropdown']");
     let currentDropdown = currentClick.nextElementSibling;
@@ -198,21 +197,19 @@ function openCloseDropdown(currentClick, target) {
                 currentIcon.setAttribute("data-active", false)
             }
             allDropdowns.forEach(dropdown => {
-                // console.log(dropdown)
-                // console.log(!dropdown.classList.contains("hide-dd") && dropdown != currentDropdown)
+                
                 if (!dropdown.classList.contains("hide-dd") && dropdown != currentDropdown) {
-                    // console.log(dropdown)
                     let icon = dropdown.previousElementSibling.querySelector('.dd-icon');
                     dropdown.classList.add("hide-dd")
                     icon.style.transform = "rotate(-90deg)";
                     icon.setAttribute("data-active", false)
                 }
             })
-            }
         }
     }
+}
 
-    headsAndChilds()
+headsAndChilds()
 
 // cases.
 // if there are h3,h4,h5,h6 present before h2 in start then it won't consider it.
