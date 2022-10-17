@@ -1,8 +1,7 @@
-class INJECTCARDONGRID {
+class INJECTCARDONGRI {
     constructor() {
         this.card = document.querySelector("[data-item='sub-card']");
         this.gridToInjectCard = document.querySelector("[data-inject='sub-card']");
-        this.clonedCard = (this.card != undefined) && this.card.cloneNode(true);
         this.paginationCta = null;
         this.init();
     }
@@ -11,15 +10,15 @@ class INJECTCARDONGRID {
        this.loadScript();
     }
     injectCard() {
-        if (this.gridToInjectCard != undefined && this.gridToInjectCard.childElementCount > 0 && this.clonedCard != undefined) {
+        if (this.gridToInjectCard != undefined && this.gridToInjectCard.childElementCount > 0) {
             if (this.gridToInjectCard.childElementCount >= 5) {
-                this.gridToInjectCard.children[5].insertAdjacentElement("afterend", this.clonedCard);
+                this.gridToInjectCard.children[5-1].insertAdjacentElement("afterend", this.card);
             }
             else if (this.gridToInjectCard.childElementCount < 5) {
-                this.gridToInjectCard.lastElementChild.insertAdjacentElement("beforebegin", this.clonedCard);
+                this.gridToInjectCard.lastElementChild.insertAdjacentElement("beforebegin", this.card);
             }
         }
-        if (this.card != undefined && this.card != null) this.card.remove();
+        // if (this.card != undefined && this.card != null) this.card.remove();
     }
 
     onPageChange() {
@@ -57,5 +56,5 @@ class INJECTCARDONGRID {
     }
 }
 window.addEventListener("load", () => {
-    new INJECTCARDONGRID;
+    new INJECTCARDONGRI;
 })
