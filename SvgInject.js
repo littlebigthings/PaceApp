@@ -27,6 +27,7 @@ function appendImage(svgToAdd, image){
     let SVGCODE = svgToAdd;
     let divToinsertSvg = document.createElement("div")
     divToinsertSvg.classList.add("guide-image")
+    divToinsertSvg.setAttribute("data-image","svg");
     divToinsertSvg.innerHTML = SVGCODE;
     let svgInsideDiv = divToinsertSvg.querySelector("svg")
     let pathsInsideSvg = svgInsideDiv.querySelectorAll("[stroke='white']");
