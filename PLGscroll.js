@@ -6,20 +6,69 @@ class ADDSCROLLTOPLGSECTIONS {
         this.sideBarIsStyled = false;
         this.activeCard = null;
         this.sideBarElm = document.querySelector("[data-cards='wrapper']");
+        this.whiteArrow = document.querySelector("[data-arrow='white']");
+        this.blackArrow = document.querySelector("[data-arrow='black']");
         this.observer;
         this.classesObj = {
-            guideWrapper : 'guide-left-sidebar',
-            cardWrap:'card-full-width',
-            guideCard:'guide-card-small',
-            guideImage:'guide-image-small',
-            colorBlack:'color-black',
-            colorWhite:'color-white',
+            guideWrapper: 'guide-left-sidebar',
+            cardWrap: 'card-full-width',
+            guideCard: 'guide-card-small',
+            guideImage: 'guide-image-small',
+            colorBlack: 'color-black',
+            colorWhite: 'color-white',
         }
         this.init();
     }
 
     init() {
-        this.addSlugToCardsAndSections();
+        this.getAllImage();
+    }
+
+    getAllImage() {
+        let allImageArray = document.querySelectorAll("[data-image='svg']");
+        let initial = 0;
+        if (allImageArray.length > 0) {
+            allImageArray.forEach(async (image) => {
+                let imageSrc = image.getAttribute("src");
+                if (imageSrc.length > 0) {
+                    let imageCode = await this.loadImgCode(imageSrc);
+                    if (imageCode != undefined) {
+                        initial++;
+                        this.appendImage(imageCode, image)
+                    }
+                }
+                if (initial == allImageArray.length) {
+                    this.addSlugToCardsAndSections();
+                }
+            })
+        }
+    }
+
+    async loadImgCode(imageSrc) {
+        if (imageSrc.length > 0) {
+            let imageData = await fetch(imageSrc)
+                .then(data => {
+                    return data.text()
+                })
+            return imageData;
+        }
+    }
+
+    appendImage(svgToAdd, image) {
+        let SVGCODE = svgToAdd;
+        let divToinsertSvg = document.createElement("div")
+        divToinsertSvg.classList.add("guide-image")
+        divToinsertSvg.setAttribute("data-image", "svg");
+        divToinsertSvg.innerHTML = SVGCODE;
+        let svgInsideDiv = divToinsertSvg.querySelector("svg")
+        let pathsInsideSvg = svgInsideDiv.querySelectorAll("[stroke='white']");
+        svgInsideDiv.setAttribute("width", "100%");
+        svgInsideDiv.setAttribute("height", "100%");
+        pathsInsideSvg.forEach(path => {
+            path.setAttribute("stroke", "currentColor");
+        })
+        image.insertAdjacentElement("beforebegin", divToinsertSvg);
+        image.remove();
     }
 
     addSlugToCardsAndSections() {
@@ -31,6 +80,7 @@ class ADDSCROLLTOPLGSECTIONS {
                 if (cardText.length > 0) {
                     let cardSlug = this.convertToSlug(cardText);
                     card.setAttribute("data-card", cardSlug);
+                    card.setAttribute("href", `#${cardSlug}`);
                 }
             })
             this.allGuideSections.forEach(section => {
@@ -39,12 +89,13 @@ class ADDSCROLLTOPLGSECTIONS {
                 if (sectionText.length > 0) {
                     let sectionSlug = this.convertToSlug(sectionText);
                     section.setAttribute("data-section", sectionSlug);
+                    section.id = sectionSlug;
                 }
             })
             // Add click to scroll functionality.
-            this.addClickToScroll();
+            // this.addClickToScroll();
             // Observer Functionality.
-            if(window.innerWidth>=992)this.addScrollObserver();
+            this.addScrollObserver();
         }
     }
 
@@ -68,7 +119,7 @@ class ADDSCROLLTOPLGSECTIONS {
         let options = {
             root: null,
             rootMargin: "0px",
-            threshold: 0.1,
+            threshold: window.innerWidth >= 992 ? 0.1 : 0.02,
         };
         this.observer = new IntersectionObserver(this.handleCards.bind(this), options);
         this.allGuideSections.forEach(section => {
@@ -78,32 +129,41 @@ class ADDSCROLLTOPLGSECTIONS {
             this.observer.observe(sectionTop);
             this.observer.observe(sectionBtm);
         })
-        if(this.topSection!= null){
+        if (this.topSection != null) {
             this.observer.observe(this.topSection);
         }
-        
+
     }
     handleCards(entries, observer) {
         entries.forEach((entry) => {
             if (entry.isIntersecting) {
                 let activeSection = entry.target;
-                if(activeSection.getAttribute("data-section")!= null){
-                    if(this.sideBarIsStyled != true){
+                if (activeSection.getAttribute("data-section") != null) {
+                    if (this.sideBarIsStyled != true && window.innerWidth >= 992) {
                         this.sideBarIsStyled = true;
                         this.styleSideBar();
                     }
                 }
-                if(activeSection.getAttribute("inner-section") == 'top'){
+                if (activeSection.getAttribute("inner-section") == 'top') {
                     let sectionSlug = activeSection.parentElement.getAttribute("data-section");
                     let cardToActive = document.querySelector(`[data-card='${sectionSlug}']`);
                     this.activeCard = cardToActive;
-                    this.setSideBarToBlackOrWhite(this.classesObj.colorBlack, this.classesObj.colorWhite);
+                    // hide or show arrows
+                    if (window.innerWidth <= 992) {
+                        this.whiteArrow.style.display = "block";
+                        this.blackArrow.style.display = "none";
+                    }
+                    if (window.innerWidth >= 992) this.setSideBarToBlackOrWhite(this.classesObj.colorBlack, this.classesObj.colorWhite);
                 }
-                if(activeSection.getAttribute("inner-section") == 'bottom'){
-                    this.setSideBarToBlackOrWhite(this.classesObj.colorWhite, this.classesObj.colorBlack);
+                if (activeSection.getAttribute("inner-section") == 'bottom') {
+                    if (window.innerWidth <= 992) {
+                        this.whiteArrow.style.display = "none";
+                        this.blackArrow.style.display = "block";
+                    }
+                    if (window.innerWidth >= 992) this.setSideBarToBlackOrWhite(this.classesObj.colorWhite, this.classesObj.colorBlack);
                 }
-                if(activeSection.getAttribute("wrapper-observer")!= null){
-                    if(this.sideBarIsStyled){
+                if (activeSection.getAttribute("wrapper-observer") != null && window.innerWidth >= 992) {
+                    if (this.sideBarIsStyled) {
                         this.sideBarIsStyled = false;
                         this.resetSideBar();
                     }
@@ -112,15 +172,15 @@ class ADDSCROLLTOPLGSECTIONS {
             }
         });
     };
-    styleSideBar(){
-        if(this.sideBarElm != null){
+    styleSideBar() {
+        if (this.sideBarElm != null) {
             let allChilds = this.sideBarElm.childNodes;
-            if(allChilds.length>0){
+            if (allChilds.length > 0) {
                 allChilds.forEach(element => {
                     let cardElement = element;
                     let linkElement = element.querySelector("[wrapper-guide='card']");
                     let image = element.querySelector("[data-image='svg']");
-                    if(cardElement != null && linkElement != null && image != null){
+                    if (cardElement != null && linkElement != null && image != null) {
                         cardElement.classList.add(this.classesObj.cardWrap);
                         linkElement.classList.add(this.classesObj.guideCard);
                         image.classList.add(this.classesObj.guideImage);
@@ -131,15 +191,15 @@ class ADDSCROLLTOPLGSECTIONS {
         }
     }
 
-    resetSideBar(){
-        if(this.sideBarElm != null){
+    resetSideBar() {
+        if (this.sideBarElm != null) {
             let allChilds = this.sideBarElm.childNodes;
-            if(allChilds.length>0){
+            if (allChilds.length > 0) {
                 allChilds.forEach(element => {
                     let cardElement = element;
                     let linkElement = element.querySelector("[wrapper-guide='card']");
                     let image = element.querySelector("[data-image='svg']");
-                    if(cardElement != null && linkElement != null && image != null){
+                    if (cardElement != null && linkElement != null && image != null) {
                         cardElement.classList.remove(this.classesObj.cardWrap);
                         linkElement.classList.remove(this.classesObj.guideCard);
                         linkElement.classList.remove(this.classesObj.colorBlack);
@@ -152,17 +212,19 @@ class ADDSCROLLTOPLGSECTIONS {
         }
     }
 
-    setSideBarToBlackOrWhite(navItemClass, activeItemClass){
-        if(this.sideBarElm != null){
+    setSideBarToBlackOrWhite(navItemClass, activeItemClass) {
+        if (this.sideBarElm != null) {
             let allChilds = this.sideBarElm.childNodes;
-            if(allChilds.length>0){
+            if (allChilds.length > 0) {
                 allChilds.forEach(element => {
                     let linkElement = element.querySelector("[wrapper-guide='card']");
-                    if(linkElement != null && linkElement != this.activeCard){
+                    let image = element.querySelector("[data-image='svg']");
+                    image.classList.add(this.classesObj.guideImage);
+                    if (linkElement != null && linkElement != this.activeCard) {
                         linkElement.classList.add(navItemClass);
                         linkElement.classList.remove(activeItemClass);
                     }
-                    if(linkElement === this.activeCard){
+                    if (linkElement === this.activeCard) {
                         linkElement.classList.remove(navItemClass);
                         linkElement.classList.add(activeItemClass);
                     }
