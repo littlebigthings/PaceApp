@@ -153,14 +153,14 @@ class ADDSCROLLTOPLGSECTIONS {
                         this.whiteArrow.style.display = "block";
                         this.blackArrow.style.display = "none";
                     }
-                    if (window.innerWidth >= 992) this.setSideBarToBlackOrWhite(this.classesObj.colorBlack, this.classesObj.colorWhite);
+                    if (window.innerWidth >= 992 && this.sideBarIsStyled) this.setSideBarToBlackOrWhite(this.classesObj.colorBlack, this.classesObj.colorWhite);
                 }
                 if (activeSection.getAttribute("inner-section") == 'bottom') {
                     if (window.innerWidth <= 992) {
                         this.whiteArrow.style.display = "none";
                         this.blackArrow.style.display = "block";
                     }
-                    if (window.innerWidth >= 992) this.setSideBarToBlackOrWhite(this.classesObj.colorWhite, this.classesObj.colorBlack);
+                    if (window.innerWidth >= 992 && this.sideBarIsStyled) this.setSideBarToBlackOrWhite(this.classesObj.colorWhite, this.classesObj.colorBlack);
                 }
                 if (activeSection.getAttribute("wrapper-observer") != null && window.innerWidth >= 992) {
                     if (this.sideBarIsStyled) {
